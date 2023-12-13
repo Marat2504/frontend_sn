@@ -1,0 +1,516 @@
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+html, body {
+    font-family: 'Roboto', sans-serif;
+    background-color: white;
+    box-sizing: border-box;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    color: #000000;
+}
+
+.container {
+    max-width: 1020px;
+    padding: 0 10px;
+    margin: 0 auto;
+}
+
+.class-flex {
+    flex: 1;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+/* App */
+.main-content {
+    display: flex;
+    flex-direction: row;
+}
+
+/* Регистрация, Авторизация */
+
+.register_container {
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px #adadad;
+    border: #000000 1px solid;
+
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    background-color: #4caf50;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: all 0.4s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #a1dca1;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.error-message {
+    color: #ff0000;
+    margin-top: 10px;
+}
+
+.success-message {
+    color: #20ad13;
+    margin-top: 10px;
+}
+
+.h2-auth {
+    text-align: center;
+}
+
+/* НавБар */
+nav {
+    background-color: #ededed;
+    border-bottom: 1px black solid;
+}
+
+.menu-block {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
+}
+
+.menu-list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.menu-item {
+    font-size: large;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.menu-item-link {
+    color: grey;
+    transition: all 0.5s ease;
+}
+
+.menu-item-link:hover {
+    color: #000000;
+}
+
+.logout-button {
+    cursor: pointer;
+}
+
+/* СайдБар */
+.sidebar_block {
+    background-color: #ededed;
+    width: 250px;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.main_menu-block {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.sidebar-name {
+    margin-bottom: 30px;
+    margin-top: 10px;
+    color: #000000;
+}
+
+.sidebar-menu {
+    text-align: center;
+}
+
+.sidebar-item {
+    display: inline-block;
+    width: 100%;
+    padding: 10px 0;
+    font-size: 18px;
+    transition: all 0.5s ease;
+}
+
+.sidebar-item:hover {
+    background-color: #c6c6c6;
+    border-radius: 5px;
+}
+
+.sidebar-link {
+    color: #000000;
+}
+
+.sidebar_image-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+
+}
+
+.sidebar_image-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* Главная страница */
+
+
+/* Userprofile */
+.profile_block {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group textarea {
+    width: 100%;
+    height: 50px;
+    resize: none;
+    padding: 5px;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.profile-block-label {
+    text-align: start;
+}
+
+/* teams */
+.group-card {
+    display: flex;
+    align-items: center;
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 15px;
+    overflow: hidden;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.group-info {
+    flex: 1;
+    text-align: start;
+    padding: 5px;
+}
+
+.group-info h2 {
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.subscribers {
+    color: #666;
+}
+
+.block-sort-team {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    margin-top: 20px;
+
+}
+
+.block-sort-team-label {
+    margin-right: 10px;
+}
+
+.block-sort-team-select {
+    font-size: 20px;
+    padding: 5px;
+}
+
+/* CreateTeams */
+.create-team_block {
+    display: flex;
+    flex-direction: row;
+    margin-top: 50px;
+
+}
+
+.create-team_block-image {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.create-team_block-image img {
+    width: 100%;
+}
+
+.create-team_block-image-block {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #42b983;
+}
+
+.create-team_block-content {
+    padding-top: 10px;
+    width: 100%;
+    flex: 1;
+}
+
+.create-team-message {
+    margin-top: 50px;
+}
+
+.message-element {
+    font-size: 20px;
+}
+
+.success {
+    color: green;
+}
+
+.error {
+    color: red;
+}
+
+/* CurrentTeam */
+.current-team-block-people {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.team-athletes {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    background-color: #ededed;
+    border-radius: 5px;
+
+}
+.team-athletes-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    width: 100%;
+}
+.team-athletes-title p {
+    margin-top: 0;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+.team-athletes-title_span {
+    color: #666666;
+}
+.team-athletes-block {
+    display: flex;
+    flex-direction: row;
+}
+
+.team-athletes_item-block {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.athletes-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.athletes-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.athletes-name h4 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.captain-team-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #ededed;
+    border-radius: 5px;
+    width: 120px;
+}
+
+/* footer */
+.footer-block {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+}
+
+/* Кнопки, селекты */
+.submit-button {
+    background-color: #638bad;
+    color: white;
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 20px;
+    transition: all ease 0.5s;
+    cursor: pointer;
+}
+
+.submit-button-red {
+    background-color: darkgrey;
+}
+
+.submit-button:hover {
+    background-color: #4caf50;
+}
+
+.userprofile-select {
+    min-width: 200px;
+    font-size: 16px;
+    padding: 5px;
+    transition: all ease 0.5s;
+    border-radius: 5px;
+}
+
+.userprofile-select:hover {
+    background-color: #e3e3e3;
+}
+
+.create-team {
+    margin-left: auto;
+    display: block;
+    background-color: #4caf50;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: all 0.4s ease;
+}
+
+.create-team:hover {
+    background-color: #a1dca1;
+}
+
+/* Спиннер */
+.loader {
+    border: 4px solid #f3f3f3; /* цвет внешнего кольца */
+    border-top: 4px solid #3498db; /* цвет активного сектора */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* анимация вращения */
+    margin: 0 auto; /* для отображения по центру */
+}
+
+@keyframes spin { /* анимация вращения */
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* поле поиска */
+.block-search {
+    display: flex;
+    justify-content: space-between;
+}
+
+.search-input {
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #85b7d9;
+    box-shadow: 0 0 0 3px rgba(85, 183, 217, 0.2);
+}
