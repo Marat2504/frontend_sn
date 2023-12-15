@@ -18,9 +18,13 @@ label {
     font-weight: bold;
 }
 
+h2 {
+    margin: 0;
+}
+
 html, body {
     font-family: 'Roboto', sans-serif;
-    background-color: white;
+    background-color: #ededed;
     box-sizing: border-box;
     height: 100%;
     margin: 0;
@@ -38,7 +42,16 @@ html, body {
 .class-flex {
     flex: 1;
     margin: 0 auto;
-    padding: 10px;
+    width: 100%;
+    height: 100%;
+}
+
+.block-area {
+    background-color: white;
+    padding: 20px;
+    margin-top: 10px;
+    border-radius: 10px;
+    height: 100%;
 }
 
 /* App */
@@ -59,15 +72,23 @@ html, body {
     border: #000000 1px solid;
 
 }
+.form-group {
+  display: flex; /* Добавляем flex-контейнер */
+  align-items: flex-start; /* Выравниваем элементы по верхнему краю */
+    flex-direction: column;
+}
+
+
 
 .form-group input[type="text"],
 .form-group input[type="email"],
 .form-group input[type="password"] {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #cccccc;
     border-radius: 4px;
+    font-size: 16px;
 }
 
 input[type="submit"] {
@@ -105,6 +126,7 @@ input[type="submit"]:hover {
 
 .h2-auth {
     text-align: center;
+    margin-bottom: 20px;
 }
 
 /* НавБар */
@@ -153,13 +175,13 @@ nav {
 
 /* СайдБар */
 .sidebar_block {
-    background-color: #ededed;
-    width: 250px;
+    width: 230px;
     padding-top: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100vh;
+    margin-right: 10px;
 }
 
 .main_menu-block {
@@ -176,13 +198,13 @@ nav {
 }
 
 .sidebar-menu {
-    text-align: center;
+    text-align: start;
 }
 
 .sidebar-item {
     display: inline-block;
     width: 100%;
-    padding: 10px 0;
+    padding: 10px 0 10px 5px;
     font-size: 18px;
     transition: all 0.5s ease;
 }
@@ -215,10 +237,18 @@ nav {
 /* Главная страница */
 
 
-/* Userprofile */
+/* EditProfile */
 .profile_block {
     display: flex;
     flex-direction: column;
+    background-color: white;
+    padding: 10px 50px 10px 50px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.profile_block h2 {
+    margin-bottom: 20px;
 }
 
 .form-group textarea {
@@ -232,6 +262,102 @@ nav {
 
 .profile-block-label {
     text-align: start;
+}
+
+/* UserProfile */
+.userProfileContainer {
+    flex: 1;
+    margin-top: 10px;
+
+}
+
+.userProfileBlock {
+    display: flex;
+    flex-direction: row;
+}
+
+.userProfileBlock-graph {
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    background-color: white;
+    padding: 10px 10px 25px 10px;
+    border-radius: 10px;
+    height: 100%;
+
+}
+
+.userProfileBlock-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+
+}
+
+.userProfileBlock-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.userProfileBlock-button {
+    margin-top: 50px;
+    width: 100%;
+    margin-bottom: 20px;
+
+}
+
+.userProfileBlock_link {
+    padding: 10px;
+    border: black 1px solid;
+    border-radius: 5px;
+    background-color: #638bad;
+    color: white;
+    font-size: 16px;
+    transition: all ease 0.5s;
+    cursor: pointer;
+
+}
+
+.profile-table {
+    width: 100%;
+    margin: 0 0 0 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 20px 20px 20px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+.profile-table h2 {
+    font-size: 24px;
+    margin: 0 0 20px;
+    text-align: center;
+}
+
+.profile-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.profile-table th,
+.profile-table td {
+    padding: 10px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dddddd;
+}
+
+.profile-table th {
+    font-weight: bold;
+    background-color: #f5f5f5;
+}
+
+.profile-table-title {
+    font-size: 14px;
+    min-width: 120px;
+    vertical-align: top;
 }
 
 /* teams */
@@ -264,6 +390,9 @@ nav {
     text-align: start;
     padding: 5px;
 }
+.group-info h3 {
+    margin: 0;
+}
 
 .group-info h2 {
     margin: 0;
@@ -290,6 +419,17 @@ nav {
 .block-sort-team-select {
     font-size: 20px;
     padding: 5px;
+}
+
+.block-search-area {
+    background-color: white;
+    padding: 20px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.block-search-area h2 {
+    margin-bottom: 20px;
 }
 
 /* CreateTeams */
@@ -362,20 +502,24 @@ nav {
     border-radius: 5px;
 
 }
+
 .team-athletes-title {
     display: flex;
     flex-direction: row;
     justify-content: start;
     width: 100%;
 }
+
 .team-athletes-title p {
     margin-top: 0;
     margin-bottom: 10px;
     margin-left: 10px;
 }
+
 .team-athletes-title_span {
     color: #666666;
 }
+
 .team-athletes-block {
     display: flex;
     flex-direction: row;
@@ -401,10 +545,12 @@ nav {
     height: 100%;
     object-fit: cover;
 }
+
 .athletes-name h4 {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
 .captain-team-block {
     display: flex;
     flex-direction: column;
@@ -414,6 +560,54 @@ nav {
     background-color: #ededed;
     border-radius: 5px;
     width: 120px;
+}
+
+/* Мои фотографии */
+.album {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.thumbnail {
+    width: 200px;
+    height: 200px;
+    margin: 10px;
+    cursor: pointer;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 999;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    position: relative;
+}
+
+.close {
+    color: #fff;
+    font-size: 2rem;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.modal-photo {
+    display: block;
+    margin: 0 auto;
 }
 
 /* footer */

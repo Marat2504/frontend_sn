@@ -55,7 +55,7 @@ export default {
 </script>
 
 <template>
-    <div class="class-flex">
+    <div class="class-flex block-area">
         <h2>Создание новой команды</h2>
 
         <div class="create-team_block">

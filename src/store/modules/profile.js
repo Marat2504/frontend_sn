@@ -12,14 +12,13 @@ const state = {
         gender: null,
         sport_type: null,
         characteristics: null,
-        inventory: null,
         athlete_photo: null,
-        // inventory_photo: null,
         date_of_birth: null,
         city: null,
         contacts_messenger: null,
         user: null
-    }
+    },
+    photos: []
 }
 
 const mutationsTypes = {
@@ -36,8 +35,12 @@ const mutationsTypes = {
     getUserprofileFailure: '[profile] getUserprofileFailure',
 
     clearUserprofileStart: '[profile] clearUserprofileStart',
-    cleatUserprofileSuccess: '[profile] cleartUserprofileSuccess',
+    clearUserprofileSuccess: '[profile] clearUserprofileSuccess',
     clearUserprofileFailure: '[profile] clearUserprofileFailure',
+
+    getUserProfilePhotosStart: '[profile] getUserProfilePhotosStart',
+    getUserProfilePhotosSuccess: '[profile] getUserProfilePhotosSuccess',
+    getUserProfilePhotosFailure: '[profile] getUserProfilePhotosFailure',
 
 }
 
@@ -53,10 +56,11 @@ const mutations = {
             state.form.gender = payload.gender,
             state.form.sport_type = payload.sport_type,
             state.form.characteristics = payload.characteristics,
-            // state.form.inventory_photo = payload.inventory_photo,
             state.form.athlete_photo = payload.athlete_photo,
-            state.form.inventory = payload.inventory,
             state.form.user = payload.user,
+            state.form.date_of_birth = payload.date_of_birth,
+            state.form.city = payload.city,
+            state.form.contacts_messenger = payload.contacts_messenger
 
             state.isLoading = false
     },
@@ -81,8 +85,10 @@ const mutations = {
             state.form.characteristics = payload.characteristics,
             state.form.inventory_photo = payload.inventory_photo,
             state.form.athlete_photo = payload.athlete_photo,
-            state.form.inventory = payload.inventory,
-            state.form.user = payload.user
+            state.form.user = payload.user,
+            state.form.date_of_birth = payload.date_of_birth,
+            state.form.city = payload.city,
+            state.form.contacts_messenger = payload.contacts_messenger
     },
     [mutationsTypes.putDataFailure](state, errors) {
         state.validationsErrors = errors
@@ -99,7 +105,7 @@ const mutations = {
 
     [mutationsTypes.clearUserprofileStart]() {
     },
-    [mutationsTypes.cleatUserprofileSuccess](state) {
+    [mutationsTypes.clearUserprofileSuccess](state) {
         state.validationsErrors = null,
             state.form.id = null,
             state.form.name = null,
@@ -107,10 +113,24 @@ const mutations = {
             state.form.gender = null,
             state.form.sport_type = null,
             state.form.characteristics = null,
-            // state.form.inventory_photo = null,
             state.form.athlete_photo = null,
-            state.form.inventory = null,
-            state.form.user = null
+            state.form.user = null,
+            state.form.date_of_birth = null,
+            state.form.city = null,
+            state.form.contacts_messenger = null
+
+    },
+
+    [mutationsTypes.getUserProfilePhotosStart](state) {
+        state.photos = []
+        state.isLoading = true
+    },
+    [mutationsTypes.getUserProfilePhotosSuccess](state, payload) {
+        state.photos = payload
+        state.isLoading = false
+    },
+    [mutationsTypes.getUserProfilePhotosFailure](state) {
+        state.isLoading = false
     }
 }
 
@@ -174,7 +194,21 @@ const actions = {
 
     clearUserProfile(context) {
         context.commit(mutationsTypes.clearUserprofileStart)
-        context.commit(mutationsTypes.cleatUserprofileSuccess)
+        context.commit(mutationsTypes.clearUserprofileSuccess)
+    },
+
+    getUserProfilePhotos(context, uuid) {
+        console.log('uuid', uuid)
+        return new Promise(() => {
+            context.commit(mutationsTypes.getUserProfilePhotosStart)
+            profileApi.getUserProfilePhotos(uuid)
+                .then(response => {
+                    context.commit(mutationsTypes.getUserProfilePhotosSuccess, response.data)
+                })
+                .catch(() => {
+                    context.commit(mutationsTypes.getUserProfilePhotosFailure)
+                })
+        })
     }
 
 }

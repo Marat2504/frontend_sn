@@ -20,20 +20,24 @@ export default {
 </script>
 
 <template>
-        <div class="sidebar_block">
-            <div class="sidebar_image-img">
-                <img :src="domain + userProfile.athlete_photo" alt="" srcset="">
-            </div>
-            <h2 class="sidebar-name">{{ userProfile.name }} {{ userProfile.surname }}</h2>
-            <ul class="sidebar-menu">
-                <li class="sidebar-item">
-                    <router-link class="sidebar-link" :to="{name: 'profile'}">Редактировать профиль</router-link>
-                </li>
-                <li class="sidebar-item">
-                    <router-link class="sidebar-link" :to="{name: 'teams'}">Команды</router-link>
-                </li>
-            </ul>
-        </div>
+    <div class="sidebar_block">
+        <ul class="sidebar-menu">
+            <li class="sidebar-item">
+                <router-link class="sidebar-link"
+                             :to="{name: 'userProfile', params: {userProfileUuid: userProfile.id}}">Мой профиль
+                </router-link>
+            </li>
+            <li class="sidebar-item">
+                <router-link class="sidebar-link" :to="{name: 'editProfile'}">Редактировать профиль</router-link>
+            </li>
+            <li class="sidebar-item">
+                <router-link class="sidebar-link" :to="{name: 'teams'}">Команды</router-link>
+            </li>
+            <li class="sidebar-item">
+                <router-link class="sidebar-link" :to="{name: 'myPhotos'}">Фотографии</router-link>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <style>

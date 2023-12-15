@@ -13,8 +13,13 @@ const editProfile = (uuid, credentials) => {
     )
 }
 
+const getUserProfilePhotos = (uuid) => {
+    return axios.get(`/profiles/photos/${uuid}/`)
+}
+
 
 export default {
     getProfile,
-    editProfile
+    editProfile,
+    getUserProfilePhotos
 }

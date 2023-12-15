@@ -32,7 +32,7 @@ export default {
             <div class="group-info">
                 <router-link
                         :to="{name: 'teamProfile', params: {slugTeam: team.slug}}">
-                    <h2>{{ team.name }}</h2>
+                    <h3>{{ team.name }}</h3>
                 </router-link>
                 <p>{{ team.description }}</p>
                 <p class="subscribers">{{ team.count_members }} подписчиков</p>
