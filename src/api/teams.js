@@ -1,7 +1,11 @@
 import axios from "axios";
 
 const getAllTeams = () => {
-    return axios.get('/teams/')
+    let userId = localStorage.getItem('user.id')
+    if (userId === '' || userId === null) {
+        return axios.get(`/teams/`)
+    }
+    return axios.get(`/teams/${userId}`)
 }
 
 const isSubscribe = (credentials) => {

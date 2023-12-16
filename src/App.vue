@@ -31,6 +31,9 @@ export default {
         }
         this.$store.dispatch('initUserProfile')
 
+    },
+    created() {
+
     }
 }
 </script>

@@ -23,7 +23,9 @@ export default {
     },
     methods: {
         submitForm() {
-            if (this.form.name.length < 50 && this.form.description < 200) {
+            console.log('form sended')
+            if (this.form.name.length < 50 && this.form.description.length < 200) {
+                console.log('form sended 2')
                 this.$store.dispatch("createNewTeam", this.form)
                 this.form.avatar = ''
                 this.imageURL = null
@@ -31,6 +33,7 @@ export default {
                 this.form.description = ''
                 this.errorMessage = []
             } else {
+                console.log('not form sended')
                 if (this.form.name.length > 50) {
                     this.errorMessage.push('Название команды слишком длинное, допустимая длина 50 символов')
                 } else if (this.form.description > 200) {
@@ -49,6 +52,9 @@ export default {
 
             reader.readAsDataURL(this.form.avatar)
         }
+    },
+    beforeCreate() {
+        this.$store.dispatch('clearIsSubmitMessage')
     }
 }
 

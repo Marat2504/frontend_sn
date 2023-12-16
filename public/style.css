@@ -32,6 +32,9 @@ html, body {
     position: relative;
     color: #000000;
 }
+#app {
+    background-color: #ededed;
+}
 
 .container {
     max-width: 1020px;
@@ -263,6 +266,14 @@ nav {
 .profile-block-label {
     text-align: start;
 }
+.block-massege {
+    margin-top: 20px;
+}
+.block-massege li {
+    font-size: 20px;
+    color: #4caf50;
+}
+
 
 /* UserProfile */
 .userProfileContainer {
@@ -450,7 +461,10 @@ nav {
 
 .create-team_block-image img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
+
 
 .create-team_block-image-block {
     width: 100%;

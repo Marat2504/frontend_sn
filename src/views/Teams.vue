@@ -53,6 +53,7 @@ export default {
         this.$store.dispatch('getAllTeams')
     },
     created() {
+
     }
 
 }

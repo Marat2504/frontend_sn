@@ -24,7 +24,7 @@ export default {
         <ul class="sidebar-menu">
             <li class="sidebar-item">
                 <router-link class="sidebar-link"
-                             :to="{name: 'userProfile', params: {userProfileUuid: userProfile.id}}">Мой профиль
+                             :to="{name: 'userProfile'}">Мой профиль
                 </router-link>
             </li>
             <li class="sidebar-item">

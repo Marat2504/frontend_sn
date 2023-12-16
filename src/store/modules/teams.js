@@ -23,6 +23,10 @@ const mutationsTypes = {
     createNewTeamSuccess: '[teams] createNewTeamSuccess',
     createNewTeamFailure: '[teams] createNewTeamFailure',
 
+    getClearIsSubmittingMassageStart: '[teams] getClearIsSubmittingMassageStart',
+    getClearIsSubmittingMassageSuccess: '[teams] getClearIsSubmittingMassageSuccess',
+    getClearIsSubmittingMassageFailure: '[teams] getClearIsSubmittingMassageFailure',
+
     sortedTeamStart: '[teams] sortedTeamStart',
     sortedTeamSuccess: '[teams] sortedTeamSuccess',
     sortedTeamFailure: '[teams] sortedTeamFailure',
@@ -82,6 +86,12 @@ const mutations = {
         state.isSubmitting = false
         state.isSubmittingMassage = payload
     },
+
+    [mutationsTypes.getClearIsSubmittingMassageStart](state) {
+        state.isSubmittingMassage = null
+    },
+    [mutationsTypes.getClearIsSubmittingMassageSuccess]() {},
+    [mutationsTypes.getClearIsSubmittingMassageFailure]() {},
 
     [mutationsTypes.sortedTeamStart](state) {
         state.isLoading = true
@@ -155,6 +165,10 @@ const actions = {
                     context.commit(mutationsTypes.createNewTeamFailure, e)
                 })
         })
+    },
+
+    clearIsSubmitMessage(context) {
+        context.commit(mutationsTypes.getClearIsSubmittingMassageStart)
     },
 
     sortedTeams(context, sortedType) {

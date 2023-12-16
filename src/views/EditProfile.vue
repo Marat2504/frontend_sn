@@ -18,7 +18,8 @@ export default {
             userProfile: state => state.profile.form,
             isLoading: state => state.profile.isLoading,
             isSubmitting: state => state.profile.isSubmitting,
-            validationsErrors: state => state.profile.validationsErrors
+            validationsErrors: state => state.profile.validationsErrors,
+            successMessage: state => state.profile.successMessage
         })
     },
 
@@ -33,7 +34,6 @@ export default {
                 this.$store.dispatch('put_data', {myId: myId, formData: this.form})
             }
 
-
         },
         handleAthletePhoto(event) {
             this.photo = event.target.files[0]
@@ -41,8 +41,8 @@ export default {
     },
 
     beforeCreate() {
-        const myId = this.$store.getters['getUserProfileId']
-        this.$store.dispatch('get_data', myId)
+        const myId = this.$store.getters['getUser']
+        this.$store.dispatch('get_data', myId.profile)
     },
     created() {
         this.form = JSON.parse(JSON.stringify(this.userProfile));
@@ -130,6 +130,12 @@ export default {
                 <li>{{ error[0] }}</li>
             </ul>
         </div>
+        <div class="block-massege" v-if="successMessage">
+            <ul v-for="message in successMessage" :key="message">
+                <li>{{ message }}</li>
+            </ul>
+        </div>
+
     </div>
 </template>
 

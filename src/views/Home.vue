@@ -25,11 +25,6 @@ export default {
   methods: {
   },
 
-  beforeCreate() {
-    const myId = this.$store.getters['getUserProfileId']
-    this.$store.dispatch('get_data', myId)
-  }
-
 }
 
 </script>

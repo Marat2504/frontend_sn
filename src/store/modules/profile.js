@@ -5,6 +5,7 @@ const state = {
     isSubmitting: false,
     isLoading: false,
     validationsErrors: null,
+    successMessage: null,
     form: {
         id: null,
         name: null,
@@ -47,7 +48,8 @@ const mutationsTypes = {
 const mutations = {
     [mutationsTypes.getDataStart]() {
         state.isLoading = true,
-            state.validationsErrors = null
+            state.validationsErrors = null,
+            state.successMessage = null
     },
     [mutationsTypes.getDataSuccess](state, payload) {
         state.form.id = payload.id,
@@ -73,6 +75,7 @@ const mutations = {
     [mutationsTypes.putDataStart](state) {
         state.isSubmitting = true
         state.validationsErrors = null
+        state.successMessage = null
     },
     [mutationsTypes.putDataSuccess](state, payload) {
         state.isSubmitting = false,
@@ -88,7 +91,9 @@ const mutations = {
             state.form.user = payload.user,
             state.form.date_of_birth = payload.date_of_birth,
             state.form.city = payload.city,
-            state.form.contacts_messenger = payload.contacts_messenger
+            state.form.contacts_messenger = payload.contacts_messenger,
+
+            state.successMessage = ['Данные успешно обновлены!']
     },
     [mutationsTypes.putDataFailure](state, errors) {
         state.validationsErrors = errors
