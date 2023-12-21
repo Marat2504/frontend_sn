@@ -46,29 +46,41 @@ const mutationsTypes = {
 }
 
 const mutations = {
-    [mutationsTypes.getDataStart]() {
+    [mutationsTypes.getDataStart](state) {
+        state.form.id = null,
+        state.form.name = null,
+        state.form.surname = null,
+        state.form.gender = null,
+        state.form.sport_type = null,
+        state.form.characteristics = null,
+        state.form.athlete_photo = null,
+        state.form.user = null,
+        state.form.date_of_birth = null,
+        state.form.city = null,
+        state.form.contacts_messenger = null
+
         state.isLoading = true,
-            state.validationsErrors = null,
-            state.successMessage = null
+        state.validationsErrors = null,
+        state.successMessage = null
     },
     [mutationsTypes.getDataSuccess](state, payload) {
         state.form.id = payload.id,
-            state.form.name = payload.name,
-            state.form.surname = payload.surname,
-            state.form.gender = payload.gender,
-            state.form.sport_type = payload.sport_type,
-            state.form.characteristics = payload.characteristics,
-            state.form.athlete_photo = payload.athlete_photo,
-            state.form.user = payload.user,
-            state.form.date_of_birth = payload.date_of_birth,
-            state.form.city = payload.city,
-            state.form.contacts_messenger = payload.contacts_messenger
+        state.form.name = payload.name,
+        state.form.surname = payload.surname,
+        state.form.gender = payload.gender,
+        state.form.sport_type = payload.sport_type,
+        state.form.characteristics = payload.characteristics,
+        state.form.athlete_photo = payload.athlete_photo,
+        state.form.user = payload.user,
+        state.form.date_of_birth = payload.date_of_birth,
+        state.form.city = payload.city,
+        state.form.contacts_messenger = payload.contacts_messenger
 
-            state.isLoading = false
+        state.isLoading = false
     },
     [mutationsTypes.getDataFailure](state, payload) {
         state.validationsErrors = payload,
-            state.isLoading = false
+        state.isLoading = false
     },
 
 
@@ -149,6 +161,20 @@ const actions = {
                     context.commit(mutationsTypes.getDataSuccess, response.data)
                     const serializeObject = JSON.stringify(state.form)
                     localStorage.setItem('userprofile', serializeObject)
+                })
+                .catch(e => {
+                    console.log('Ошибка добавления профиля в state', e)
+                    context.commit(mutationsTypes.getDataFailure, e)
+                })
+        })
+    },
+
+    getDataOtherUser(context, uuid) {
+        return new Promise(() => {
+            context.commit(mutationsTypes.getDataStart)
+            profileApi.getProfile(uuid)
+                .then(response => {
+                    context.commit(mutationsTypes.getDataSuccess, response.data)
                 })
                 .catch(e => {
                     console.log('Ошибка добавления профиля в state', e)

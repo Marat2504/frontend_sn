@@ -9,23 +9,29 @@ const getAllTeams = () => {
 }
 
 const isSubscribe = (credentials) => {
-    console.log('team_id, user_id', credentials)
     return axios.post(`/teams/${credentials.team}/${credentials.user}/`)
 }
 
 const createTeam = (credential) => {
-    console.log('New team data', credential)
     return axios.post(`/teams/create/`, credential, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
 }
 
+const editTeam = (credentials) => {
+    return axios.put(`/teams/edit/${credentials.team}/${credentials.user}/`, credentials.formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
+}
 
 export default {
     getAllTeams,
     isSubscribe,
-    createTeam
+    createTeam,
+    editTeam
 
 }

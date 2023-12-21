@@ -44,8 +44,8 @@ export default {
         }
     },
     beforeCreate() {
-        const myId = this.$store.getters['getUserProfile']
-        this.$store.dispatch('getUserProfilePhotos', myId['id'])
+        const profile = JSON.parse(localStorage.getItem('userprofile'))
+        this.$store.dispatch('getUserProfilePhotos', profile.id)
     }
 
 }
@@ -54,7 +54,7 @@ export default {
 <template>
     <div class="userProfileContainer block-area">
         <div>
-            <h1>Мои фотографии</h1>
+            <h2>Все фотографии</h2>
         </div>
 
         <div v-if="!isLoading" class="album">

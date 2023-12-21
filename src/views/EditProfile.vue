@@ -9,7 +9,7 @@ export default {
     data() {
         return {
             domain: domainConst.domain,
-            form: null,
+            form: this.$store.getters['getUserProfile'],
             photo: null,
         }
     },
@@ -25,13 +25,13 @@ export default {
 
     methods: {
         submitForm() {
-            const myId = this.$store.getters['getUserProfileId']
+            const myUserProfile = JSON.parse(localStorage.getItem('userprofile'))
             if (this.photo !== null) {
                 this.form.athlete_photo = this.photo
-                this.$store.dispatch('put_data', {myId: myId, formData: this.form})
+                this.$store.dispatch('put_data', {myId: myUserProfile.id, formData: this.form})
                 this.photo = null
             } else {
-                this.$store.dispatch('put_data', {myId: myId, formData: this.form})
+                this.$store.dispatch('put_data', {myId: myUserProfile.id, formData: this.form})
             }
 
         },
@@ -41,22 +41,19 @@ export default {
     },
 
     beforeCreate() {
-        const myId = this.$store.getters['getUser']
-        this.$store.dispatch('get_data', myId.profile)
-    },
-    created() {
-        this.form = JSON.parse(JSON.stringify(this.userProfile));
-        delete this.form.athlete_photo
-    },
-    mounted() {
+        const myProfile = JSON.parse(localStorage.getItem('userprofile'))
+        this.$store.dispatch('get_data', myProfile.id)
 
-    }
+    },
+    created() {},
+    mounted() {}
 }
 
 </script>
 <template>
     <div class="profile_block class-flex">
         <h2>Редактирование профиля</h2>
+        {{form.avatar}}
         <div v-if="!isLoading">
 
             <form

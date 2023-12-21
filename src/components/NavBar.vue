@@ -25,9 +25,12 @@ export default {
   <header>
     <nav style="padding: 0">
       <div class="menu-block container">
-        <h1 class="menu-title">
-          <router-link :to="{name: 'home'}"><span class="nav-logo">YOUR SPORT</span></router-link>
-        </h1>
+          <router-link :to="{name: 'home',}">
+              <div class="menu-block_logo">
+              <img src="/logo.png" alt="logo">
+          </div>
+          </router-link>
+
         <ul class="menu-list">
           <template v-if="!isLoggedIn">
             <li class="menu-item">

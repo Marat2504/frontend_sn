@@ -18,6 +18,6 @@ export default createStore({
     auth,
     profile,
     teams,
-    currentTeam
+    currentTeam,
   }
 })

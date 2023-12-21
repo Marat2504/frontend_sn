@@ -13,7 +13,7 @@ export default {
         return {
             domain: domainConst.domain,
             searchQuery: '',
-            sortedType: 'count',
+            sortedType: 'none',
 
         }
     },
@@ -75,6 +75,7 @@ export default {
             <div class="block-sort-team">
                 <label class="block-sort-team-label" for="sorted">Сортировать по:</label>
                 <select class="block-sort-team-select" id="sorted" v-model="sortedType" required>
+                    <option value="none" v-if="sortedType==='none'">выберите фильтр</option>
                     <option value="count">Количество участников</option>
                     <option value="name">Названию команды</option>
                 </select>

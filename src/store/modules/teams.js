@@ -3,6 +3,7 @@ import apiTeams from "@/api/teams"
 const state = {
     allTeams: [],
     allTeamsCopy: [],
+    editTeam: {},
     isLoading: false,
     isSubmitting: false,
     isSubmittingMassage: null,
@@ -13,7 +14,6 @@ const mutationsTypes = {
     getAllTeamsStart: '[teams] getAllTeamsStart',
     getAllTeamsSuccess: '[teams] getAllTeamsSuccess',
     getAllTeamsFailure: '[teams] getAllTeamsFailure',
-
 
     isSubscribeStart: '[teams] isSubscribeStart',
     isSubscribeSuccess: '[teams] isSubscribeSuccess',
@@ -35,6 +35,9 @@ const mutationsTypes = {
     searchTeamSuccess: '[teams] searchTeamSuccess',
     searchTeamFailure: '[teams] searchTeamFailure',
 
+    editTeamStart: '[teams] editTeamStart',
+    editTeamSuccess: '[teams] editTeamSuccess',
+    editTeamFailure: '[teams] editTeamFailure'
 
 }
 
@@ -120,7 +123,21 @@ const mutations = {
     },
     [mutationsTypes.searchTeamFailure](state) {
         state.isLoading = false
-    }
+    },
+
+    [mutationsTypes.editTeamStart](state) {
+        state.isSubmitting = true
+        state.isSubmittingMassage = null
+    },
+    [mutationsTypes.editTeamSuccess](state, payload) {
+        state.isSubmitting = false
+        state.editTeam = payload
+        state.isSubmittingMassage = ['Данные команды обновлены']
+    },
+    [mutationsTypes.editTeamFailure](state, error) {
+        state.isSubmitting = false
+        state.isSubmittingMassage = error
+    },
 
 }
 
@@ -143,6 +160,7 @@ const actions = {
             context.commit(mutationsTypes.isSubscribeStart)
             apiTeams.isSubscribe(credentials)
                 .then(() => {
+                    console.log('успешно подписался/отписался')
                     context.commit(mutationsTypes.isSubscribeSuccess, credentials.team)
                 })
                 .catch(() => {
@@ -164,6 +182,22 @@ const actions = {
                     console.log('Ошибка при создании новой команды', e)
                     context.commit(mutationsTypes.createNewTeamFailure, e)
                 })
+        })
+    },
+
+    editTeam(context, credentials) {
+        return new Promise(() => {
+            context.commit(mutationsTypes.editTeamStart)
+            console.log('Полученные данные', credentials)
+            apiTeams.editTeam(credentials)
+                .then(response => {
+                    context.commit(mutationsTypes.editTeamSuccess, response.data)
+                })
+                .catch(e => {
+                    console.log('Ошибка при редактировании новой команды', e)
+                    context.commit(mutationsTypes.editTeamFailure, e)
+                })
+
         })
     },
 

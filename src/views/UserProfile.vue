@@ -1,18 +1,39 @@
 <script>
 import {mapState} from "vuex";
 import domainConst from "@/helpers/const.js"
+import MvcPhotoPreview from "@/components/PhotoPreview.vue";
 
 export default {
     name: 'MvcUserProfile',
+    components: {MvcPhotoPreview},
     computed: {
         ...mapState({
             userProfile: state => state.profile.form,
-            isLoading: state => state.profile.isLoading
+            isLoading: state => state.profile.isLoading,
+            photos: state => state.profile.photos
         })
     },
     data() {
         return {
-            domain: domainConst.domain
+            isUserProfile: null,
+            domain: domainConst.domain,
+            uuidRoute: this.$route.params.userProfileId,
+            userProfileUuid: this.$store.getters['getUserProfileId']
+        }
+    },
+    beforeCreate() {
+        const uuidProfile = this.$route.params.userProfileId
+        this.$store.dispatch('getDataOtherUser', uuidProfile)
+
+        this.$store.dispatch('getUserProfilePhotos', uuidProfile)
+    },
+    methods: {},
+    watch: {
+        $route(newRoute, oldRoute) {
+            console.log('oldRoute', oldRoute)
+            this.uuidRoute = newRoute.params.userProfileId
+            this.$store.dispatch('getDataOtherUser', this.uuidRoute)
+            this.$store.dispatch('getUserProfilePhotos', this.uuidRoute)
         }
     }
 }
@@ -28,8 +49,11 @@ export default {
                 </div>
                 <div v-else class="loader"></div>
 
-                <div class="userProfileBlock-button">
-                    <router-link class="userProfileBlock_link" :to="{name: 'editProfile'}">Редактировать профиль</router-link>
+                <div
+                        v-if="uuidRoute === userProfileUuid"
+                        class="userProfileBlock-button">
+                    <router-link class="userProfileBlock_link" :to="{name: 'editProfile'}">Редактировать профиль
+                    </router-link>
                 </div>
                 <h4>Подписчиков 5</h4>
                 <h4>Подписок 10</h4>
@@ -54,7 +78,8 @@ export default {
                     </tr>
                     <tr>
                         <td class="profile-table-title">Вид спорта</td>
-                        <td>{{ userProfile.sport_type }}</td>
+                        <td v-if="userProfile.sport_type==='ski'">Лыжные гонки</td>
+                        <td v-if="userProfile.sport_type==='run'">Легкая атлетика</td>
                     </tr>
                     <tr>
                         <td class="profile-table-title">Telegram</td>
@@ -69,10 +94,14 @@ export default {
             <div v-else class="loader"></div>
 
         </div>
+        <mvc-photo-preview
+                :isLoading="isLoading"
+                :domain="domain"
+                :photos="photos">
+        </mvc-photo-preview>
     </div>
 
 </template>
 
 <style scoped>
-
 </style>

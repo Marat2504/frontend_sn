@@ -1,7 +1,7 @@
 import apiCurrentTeam from "@/api/currentTeam"
 
 const state = {
-    currentTeam: null,
+    currentTeam: {},
     isLoading: false,
     teamAthletes: [],
     teamCaptain: {}
@@ -19,11 +19,19 @@ const mutationsTypes = {
     getCaptainTeamStart: '[currentTeam] getCaptainTeamStart',
     getCaptainTeamSuccess: '[currentTeam] getCaptainTeamSuccess',
     getCaptainTeamFailure: '[currentTeam] getCaptainTeamFailure',
+
+    isSubscribeCurrentTeamStart: '[currentTeam] isSubscribeCurrentTeamStart',
+    isSubscribeCurrentTeamSuccess: '[currentTeam] isSubscribeCurrentTeamSuccess',
+    isSubscribeCurrentTeamFailure: '[currentTeam] isSubscribeCurrentTeamFailure',
+
+    changeUserStatusStart: '[currentTeam] changeUserStatusStart',
+    changeUserStatusSuccess: '[currentTeam] changeUserStatusSuccess',
+    changeUserStatusFailure: '[currentTeam] changeUserStatusFailure',
 }
 
 const mutations = {
     [mutationsTypes.getCurrentTeamStart](state) {
-        state.currentTeam = null
+        state.currentTeam = {}
         state.isLoading = true
     },
     [mutationsTypes.getCurrentTeamSuccess](state, payload) {
@@ -55,7 +63,29 @@ const mutations = {
     },
     [mutationsTypes.getCaptainTeamFailure](state) {
         state.isLoading = false
-    }
+    },
+
+    [mutationsTypes.isSubscribeCurrentTeamStart](state) {
+        state.isLoading = true
+    },
+    [mutationsTypes.isSubscribeCurrentTeamSuccess](state) {
+        state.isLoading = false
+        state.currentTeam.is_user_member = !state.currentTeam.is_user_member
+    },
+    [mutationsTypes.isSubscribeCurrentTeamFailure](state) {
+        state.isLoading = false
+    },
+
+    [mutationsTypes.changeUserStatusStart]() {},
+    [mutationsTypes.changeUserStatusSuccess](state, userProfile) {
+        const index = state.teamAthletes.findIndex(obj => obj.id === userProfile.id)
+        if (index !== -1) {
+            state.teamAthletes.splice(index, 1)
+        } else {
+            state.teamAthletes.push(userProfile)
+        }
+    },
+    [mutationsTypes.changeUserStatusFailure]() {}
 }
 
 const actions = {
@@ -100,10 +130,37 @@ const actions = {
                     context.commit(mutationsTypes.getCaptainTeamFailure)
                 })
         })
+    },
+
+    isSubscribeCurrentTeam(context, credentials) {
+        return new Promise(() => {
+            context.commit(mutationsTypes.isSubscribeCurrentTeamStart)
+            apiCurrentTeam.isSubscribeCurrentTeam(credentials)
+                .then(() => {
+                    context.commit(mutationsTypes.isSubscribeCurrentTeamSuccess)
+                })
+                .catch(() => {
+                    console.log('Ошибка при подписке/отписке текущей команды')
+                })
+        })
+    },
+
+    changeUserStatus(context, userProfile) {
+        return new Promise(() => {
+            console.log('userProfile', userProfile)
+            context.commit(mutationsTypes.changeUserStatusStart)
+            context.commit(mutationsTypes.changeUserStatusSuccess, userProfile)
+            context.commit(mutationsTypes.changeUserStatusFailure)
+        })
     }
 }
 
+const getters = {
+    getCurrentTeam: state => {
+        return state.currentTeam
+    }
+}
 
 export default {
-    state, mutationsTypes, mutations, actions
+    state, mutationsTypes, mutations, actions, getters
 }

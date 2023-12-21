@@ -10,6 +10,8 @@ import isLoggedIn from "@/helpers/functions"
 import CurrentTeam from "@/views/CurrentTeam.vue";
 import UserProfile from "@/views/UserProfile.vue";
 import MyPhotos from "@/views/MyPhotos.vue";
+import EditTeam from "@/views/EditTeam.vue";
+
 
 const routes = [
     {
@@ -54,14 +56,22 @@ const routes = [
         }
     },
     {
-        path: '/user',
+        path: '/user/:userProfileId',
         name: 'userProfile',
-        component: UserProfile
+        component: UserProfile,
+        meta: {
+            requiresAuth: true,
+        }
     },
     {
         path: '/photos',
         name: 'myPhotos',
         component: MyPhotos
+    },
+    {
+        path: '/team/:slugTeam/edit',
+        name: 'editTeam',
+        component: EditTeam
     },
 ]
 

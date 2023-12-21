@@ -10,6 +10,7 @@ li {
 
 a {
     text-decoration: none;
+    color: black;
 }
 
 label {
@@ -22,6 +23,10 @@ h2 {
     margin: 0;
 }
 
+button {
+    border: none;
+}
+
 html, body {
     font-family: 'Roboto', sans-serif;
     background-color: #ededed;
@@ -32,6 +37,7 @@ html, body {
     position: relative;
     color: #000000;
 }
+
 #app {
     background-color: #ededed;
 }
@@ -55,6 +61,8 @@ html, body {
     margin-top: 10px;
     border-radius: 10px;
     height: 100%;
+    flex: 1;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* App */
@@ -75,12 +83,12 @@ html, body {
     border: #000000 1px solid;
 
 }
+
 .form-group {
-  display: flex; /* Добавляем flex-контейнер */
-  align-items: flex-start; /* Выравниваем элементы по верхнему краю */
+    display: flex; /* Добавляем flex-контейнер */
+    align-items: flex-start; /* Выравниваем элементы по верхнему краю */
     flex-direction: column;
 }
-
 
 
 .form-group input[type="text"],
@@ -141,6 +149,14 @@ nav {
 .menu-block {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.menu-block_logo {
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .nav-logo {
@@ -207,8 +223,8 @@ nav {
 .sidebar-item {
     display: inline-block;
     width: 100%;
-    padding: 10px 0 10px 5px;
-    font-size: 18px;
+    padding: 15px 0 15px 5px;
+    font-size: 22px;
     transition: all 0.5s ease;
 }
 
@@ -266,9 +282,11 @@ nav {
 .profile-block-label {
     text-align: start;
 }
+
 .block-massege {
     margin-top: 20px;
 }
+
 .block-massege li {
     font-size: 20px;
     color: #4caf50;
@@ -285,17 +303,22 @@ nav {
 .userProfileBlock {
     display: flex;
     flex-direction: row;
+    align-items: stretch;
 }
 
 .userProfileBlock-graph {
     display: flex;
     flex-direction: column;
-    width: 220px;
+    flex: 0 0 220px;
+    align-items: stretch;
     background-color: white;
     padding: 10px 10px 25px 10px;
     border-radius: 10px;
-    height: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
+.userProfileBlock-graph h4 {
+    text-align: center;
 }
 
 .userProfileBlock-img {
@@ -340,6 +363,7 @@ nav {
     padding: 20px 20px 20px 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     flex: 1;
+    align-items: stretch;
 }
 
 .profile-table h2 {
@@ -401,6 +425,11 @@ nav {
     text-align: start;
     padding: 5px;
 }
+
+.group-info p {
+    margin: 5px;
+}
+
 .group-info h3 {
     margin: 0;
 }
@@ -437,6 +466,7 @@ nav {
     padding: 20px;
     margin-top: 10px;
     border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .block-search-area h2 {
@@ -452,8 +482,8 @@ nav {
 }
 
 .create-team_block-image {
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     overflow: hidden;
     margin-right: 10px;
@@ -484,6 +514,7 @@ nav {
 
 .create-team-message {
     margin-top: 50px;
+
 }
 
 .message-element {
@@ -499,82 +530,87 @@ nav {
 }
 
 /* CurrentTeam */
-.current-team-block-people {
+.group-container {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    gap: 10px;
 }
 
-.team-athletes {
+.group-container-left {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    background-color: #ededed;
-    border-radius: 5px;
-
-}
-
-.team-athletes-title {
-    display: flex;
-    flex-direction: row;
     justify-content: start;
-    width: 100%;
+    align-items: center;
+    width: 150px;
 }
 
-.team-athletes-title p {
-    margin-top: 0;
-    margin-bottom: 10px;
-    margin-left: 10px;
-}
-
-.team-athletes-title_span {
-    color: #666666;
-}
-
-.team-athletes-block {
-    display: flex;
-    flex-direction: row;
-}
-
-.team-athletes_item-block {
-    display: flex;
-    flex-direction: column;
-    width: 100px;
-    margin-right: 10px;
-    margin-left: 10px;
-}
-
-.athletes-img {
-    width: 100px;
-    height: 100px;
+.group-container-left-avatar {
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     overflow: hidden;
+    margin: 0 auto;
 }
 
-.athletes-img img {
+.group-container-left-avatar img {
+    object-fit: cover;
     width: 100%;
     height: 100%;
-    object-fit: cover;
 }
 
-.athletes-name h4 {
-    margin-top: 5px;
-    margin-bottom: 5px;
+.group-container-left-button {
+    width: 150px;
+    margin-top: 20px;
 }
 
-.captain-team-block {
+.group-container-left-button a {
+    display: block;
+    background-color: yellow;
+    padding: 10px 0 10px 0;
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    color: black;
+
+}
+
+.group-container-left-button button {
+    width: 100%;
+    height: 40px;
+    background-color: red;
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 10px 0 10px 0;
+    border: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.group-container-right {
     display: flex;
     flex-direction: column;
     justify-content: start;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background-color: #ededed;
-    border-radius: 5px;
-    width: 120px;
+    align-items: start;
+    flex: 1;
+    padding-left: 20px;
+    max-width: 600px
 }
+
+.group-container-right h4 {
+    text-align: start;
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 100%;
+}
+
+.group-container-right h2,
+.group-container-right h3 {
+    text-align: start;
+}{
+    text-align: start;
+}
+
 
 /* Мои фотографии */
 .album {
@@ -722,3 +758,143 @@ nav {
     border-color: #85b7d9;
     box-shadow: 0 0 0 3px rgba(85, 183, 217, 0.2);
 }
+
+/* CaptainBlock */
+.captain-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.captain-block-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+}
+
+.captain-block-title h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.captain-block-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    margin-top: 20px;
+    border-bottom: 1px grey solid;
+    padding-bottom: 20px;
+}
+
+.captain-block-content-hover {
+    padding: 0 10px;
+    transition: background-color 0.5s, color 0.3s;
+}
+
+.captain-block-content-hover:hover {
+    background-color: #cccccc;
+    border-radius: 5px;
+}
+
+.captain-block-content-foto {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 20px 0 auto;
+}
+
+.captain-block-content-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.captain-block-content-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.captain-block-content-info h3 {
+    margin: 0;
+}
+
+.captain-block-content-info h5 {
+    margin: 0;
+}
+
+/* Home */
+
+.hero-section {
+    background-color: #F0F0F0;
+    padding: 60px;
+    text-align: center;
+}
+
+.hero-section h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.hero-section p {
+    color: #666;
+    margin-bottom: 40px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #FFF;
+    background-color: #333;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #555;
+}
+
+.btn-primary {
+    background-color: #1E90FF;
+}
+
+.btn-primary:hover {
+    background-color: #007BFF;
+}
+
+/* Стили для секции с особенностями */
+.features-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px;
+    background-color: #FFF;
+}
+
+.feature {
+    flex-basis: 50%;
+    text-align: center;
+    margin-right: 60px;
+}
+
+.feature i {
+    font-size: 48px;
+    color: #1E90FF;
+    margin-bottom: 20px;
+}
+
+.feature h3 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.feature p {
+    color: #666;
+}
+/* PhotoPreview */
+

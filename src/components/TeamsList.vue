@@ -14,11 +14,14 @@ export default {
     methods: {
         handleButtonClick(team) {
             this.$emit('button-clicked', team)
+        },
+        truncatedDescription(description, value) {
+            return description.substring(0, value) + '...'
         }
     },
     mounted() {
         console.log('Массив команд', this.teams)
-    }
+    },
 
 }
 </script>
@@ -32,9 +35,11 @@ export default {
             <div class="group-info">
                 <router-link
                         :to="{name: 'teamProfile', params: {slugTeam: team.slug}}">
-                    <h3>{{ team.name }}</h3>
+                    <h3 v-if="team.name.length > 40">{{ truncatedDescription(team.name, 40) }}</h3>
+                    <h3 v-else>{{ team.name }}</h3>
                 </router-link>
-                <p>{{ team.description }}</p>
+                <p v-if="team.description.length > 80">{{truncatedDescription(team.description, 80)}}</p>
+                <p v-else>{{ team.description }}</p>
                 <p class="subscribers">{{ team.count_members }} подписчиков</p>
             </div>
 

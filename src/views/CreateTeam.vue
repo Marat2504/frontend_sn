@@ -9,6 +9,8 @@ export default {
                 name: '',
                 description: '',
                 avatar: '',
+                detailedDescription: '',
+                telegramTeam: ''
             },
             imageURL: null,
             errorMessage: []
@@ -19,21 +21,22 @@ export default {
             isSubmitting: state => state.profile.isSubmitting,
             isSubmittingMassage: state => state.teams.isSubmittingMassage,
             userProfile: state => state.profile.form,
-        })
+        }),
+
     },
     methods: {
         submitForm() {
             console.log('form sended')
             if (this.form.name.length < 50 && this.form.description.length < 200) {
-                console.log('form sended 2')
                 this.$store.dispatch("createNewTeam", this.form)
                 this.form.avatar = ''
                 this.imageURL = null
                 this.form.name = ''
                 this.form.description = ''
+                this.detailedDescription = ''
+                this.telegramTeam = ''
                 this.errorMessage = []
             } else {
-                console.log('not form sended')
                 if (this.form.name.length > 50) {
                     this.errorMessage.push('Название команды слишком длинное, допустимая длина 50 символов')
                 } else if (this.form.description > 200) {
@@ -63,7 +66,6 @@ export default {
 <template>
     <div class="class-flex block-area">
         <h2>Создание новой команды</h2>
-
         <div class="create-team_block">
             <div class="create-team_block-image">
                 <img v-if="form.avatar" :src="imageURL" alt="тут должно быть фото Команды">
@@ -92,6 +94,23 @@ export default {
                     </div>
 
                     <div class="form-group">
+                        <label class="profile-block-label">Полное описание</label>
+                        <textarea
+                                v-model="form.detailedDescription"
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="profile-block-label" for="telegramTeam">Телеграм</label>
+                        <input
+                                type="text"
+                                id="telegramTeam"
+                                v-model="form.telegramTeam"
+                                required
+                        >
+                    </div>
+
+                    <div class="form-group">
                         <label class="profile-block-label" for="avatar">Аватар</label>
                         <input type="file" id="avatar" @change="handleTeamPhoto">
                     </div>
@@ -102,6 +121,7 @@ export default {
                     </button>
                 </form>
             </div>
+
         </div>
         <div class="create-team-message" v-if="isSubmittingMassage">
             <ul class="message-success-group" v-for="message in isSubmittingMassage" :key="message">
@@ -113,6 +133,7 @@ export default {
                 <li class="message-element error">{{ error }}</li>
             </ul>
         </div>
+
     </div>
 </template>
 
