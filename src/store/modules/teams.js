@@ -6,7 +6,7 @@ const state = {
     editTeam: {},
     isLoading: false,
     isSubmitting: false,
-    isSubmittingMassage: null,
+    isSubmittingMassage: []
 
 }
 
@@ -91,7 +91,7 @@ const mutations = {
     },
 
     [mutationsTypes.getClearIsSubmittingMassageStart](state) {
-        state.isSubmittingMassage = null
+        state.isSubmittingMassage = []
     },
     [mutationsTypes.getClearIsSubmittingMassageSuccess]() {},
     [mutationsTypes.getClearIsSubmittingMassageFailure]() {},
@@ -127,7 +127,7 @@ const mutations = {
 
     [mutationsTypes.editTeamStart](state) {
         state.isSubmitting = true
-        state.isSubmittingMassage = null
+        state.isSubmittingMassage = []
     },
     [mutationsTypes.editTeamSuccess](state, payload) {
         state.isSubmitting = false
@@ -171,12 +171,13 @@ const actions = {
     },
 
     createNewTeam(context, credentials) {
-        return new Promise(() => {
+        return new Promise((resolve) => {
             context.commit(mutationsTypes.createNewTeamStart)
             console.log('Полученные данные из формы', credentials)
             apiTeams.createTeam(credentials)
                 .then(response => {
                     context.commit(mutationsTypes.createNewTeamSuccess, response.data)
+                    resolve(response.data)
                 })
                 .catch(e => {
                     console.log('Ошибка при создании новой команды', e)

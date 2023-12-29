@@ -2,11 +2,15 @@
 import {mapState} from "vuex";
 import domainConst from "@/helpers/const"
 import MvcTeamsList from "@/components/TeamsList.vue";
+import MvcSpinner from "@/components/Spiner.vue";
+import MvcCreateTeam from "@/components/buttons/CreateTeam.vue";
 
 
 export default {
     name: 'MvcTeams',
     components: {
+        MvcCreateTeam,
+        MvcSpinner,
         MvcTeamsList,
     },
     data() {
@@ -64,12 +68,7 @@ export default {
             <div class="block-search">
                 <input type="text" placeholder="Поиск по названию или описанию" v-model="searchQuery"
                        class="search-input">
-                <router-link
-                        v-if="isLoggedIn"
-                        :to="{name: 'createTeam'}"
-                        class="create-team"
-                >Создать новую команду
-                </router-link>
+                <mvc-create-team v-if="isLoggedIn">Создать новую команду</mvc-create-team>
             </div>
 
             <div class="block-sort-team">
@@ -91,7 +90,7 @@ export default {
                         @button-clicked="handleButtonClick"
                 >
                 </mvc-teams-list>
-                <div class="loader" v-else></div>
+                <mvc-spinner v-else></mvc-spinner>
             </div>
 
             <div v-if="otherTeams.length !== 0" class="block-search-area">
@@ -103,7 +102,7 @@ export default {
                         @button-clicked="handleButtonClick"
                 >
                 </mvc-teams-list>
-                <div class="loader" v-else></div>
+                <mvc-spinner v-else></mvc-spinner>
             </div>
 
     </div>

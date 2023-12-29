@@ -1,8 +1,10 @@
 <script>
 import {mapState} from "vuex";
+import MvcModalMessage from "@/components/modal/ModalMessage.vue";
 
 export default {
     name: 'MvcCreateTeam',
+    components: {MvcModalMessage},
     data() {
         return {
             form: {
@@ -13,7 +15,8 @@ export default {
                 telegramTeam: ''
             },
             imageURL: null,
-            errorMessage: []
+            errorMessage: [],
+            toRedirect: {},
         }
     },
     computed: {
@@ -29,6 +32,10 @@ export default {
             console.log('form sended')
             if (this.form.name.length < 50 && this.form.description.length < 200) {
                 this.$store.dispatch("createNewTeam", this.form)
+                        .then(data => {
+                            const newTeam = data
+                            this.toRedirect = {name: 'teamProfile', params: {slugTeam: newTeam.slug}}
+                        })
                 this.form.avatar = ''
                 this.imageURL = null
                 this.form.name = ''
@@ -64,6 +71,17 @@ export default {
 </script>
 
 <template>
+    <mvc-modal-message
+            :messages="errorMessage"
+            mood="red"
+            clear-message="clearIsSubmitMessage"
+    ></mvc-modal-message>
+    <mvc-modal-message
+            :messages="isSubmittingMassage"
+            mood="green"
+            clear-message="clearIsSubmitMessage"
+            :to-redirect="toRedirect"
+    ></mvc-modal-message>
     <div class="class-flex block-area">
         <h2>Создание новой команды</h2>
         <div class="create-team_block">
@@ -121,19 +139,7 @@ export default {
                     </button>
                 </form>
             </div>
-
         </div>
-        <div class="create-team-message" v-if="isSubmittingMassage">
-            <ul class="message-success-group" v-for="message in isSubmittingMassage" :key="message">
-                <li class="message-element success">{{ message }}</li>
-            </ul>
-        </div>
-        <div class="create-team-message" v-if="errorMessage">
-            <ul class="message-success-group" v-for="error in errorMessage" :key="error">
-                <li class="message-element error">{{ error }}</li>
-            </ul>
-        </div>
-
     </div>
 </template>
 

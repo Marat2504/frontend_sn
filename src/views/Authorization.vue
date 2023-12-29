@@ -74,6 +74,7 @@ export default {
                                 this.$store.dispatch('getUserInfo')
                                         .then(res => {
                                             this.$store.dispatch('get_data', localStorage.getItem('user.profile'))
+
                                             if (res === true) {
                                                 this.$router.push({
                                                     name: 'userProfile',

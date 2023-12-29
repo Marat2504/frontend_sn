@@ -2,15 +2,19 @@
 
 import {mapState} from "vuex";
 import domainConst from "@/helpers/const.js"
+import MvcSpinner from "@/components/Spiner.vue";
+import MvcModalMessage from "@/components/modal/ModalMessage.vue";
 
 
 export default {
     name: 'MvcEditProfile',
+    components: {MvcModalMessage, MvcSpinner},
     data() {
         return {
             domain: domainConst.domain,
             form: this.$store.getters['getUserProfile'],
             photo: null,
+            componentKey: 0
         }
     },
     computed: {
@@ -18,7 +22,7 @@ export default {
             userProfile: state => state.profile.form,
             isLoading: state => state.profile.isLoading,
             isSubmitting: state => state.profile.isSubmitting,
-            validationsErrors: state => state.profile.validationsErrors,
+            errorMessage: state => state.profile.errorMessage,
             successMessage: state => state.profile.successMessage
         })
     },
@@ -31,12 +35,24 @@ export default {
                 this.$store.dispatch('put_data', {myId: myUserProfile.id, formData: this.form})
                 this.photo = null
             } else {
+                this.form.athlete_photo = null
                 this.$store.dispatch('put_data', {myId: myUserProfile.id, formData: this.form})
             }
 
         },
         handleAthletePhoto(event) {
             this.photo = event.target.files[0]
+        },
+        reRenderComponent() {
+            console.log('reRenderComponent')
+        },
+        toRedirectSuccess() {
+            return {
+                name: 'userProfile',
+                params: {
+                    userProfileId: this.userProfile.id
+                }
+            }
         }
     },
 
@@ -51,10 +67,22 @@ export default {
 
 </script>
 <template>
+    <mvc-modal-message
+            :messages="errorMessage"
+            mood="red"
+            clear-message="clearSuccessMessage"
+    ></mvc-modal-message>
+    <mvc-modal-message
+            :messages="successMessage"
+            mood="green"
+            clear-message="clearSuccessMessage"
+            :to-redirect=toRedirectSuccess()
+    ></mvc-modal-message>
+
     <div class="profile_block class-flex">
         <h2>Редактирование профиля</h2>
         {{form.avatar}}
-        <div v-if="!isLoading">
+        <div v-if="!isLoading" :key="componentKey">
 
             <form
                     @submit.prevent="submitForm"
@@ -120,20 +148,10 @@ export default {
                 </button>
             </form>
         </div>
-        <div class="loader" v-else>
-        </div>
-        <div v-if="validationsErrors">
-            <ul v-for="error in validationsErrors" :key="error">
-                <li>{{ error[0] }}</li>
-            </ul>
-        </div>
-        <div class="block-massege" v-if="successMessage">
-            <ul v-for="message in successMessage" :key="message">
-                <li>{{ message }}</li>
-            </ul>
+        <mvc-spinner v-else></mvc-spinner>
         </div>
 
-    </div>
+
 </template>
 
 <style>

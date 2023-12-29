@@ -4,8 +4,10 @@ import profileApi from '@/api/profile'
 const state = {
     isSubmitting: false,
     isLoading: false,
-    validationsErrors: null,
-    successMessage: null,
+    successMessage: [],
+    errorMessage: [],
+    photos: [],
+    newPhotos: [],
     form: {
         id: null,
         name: null,
@@ -18,8 +20,7 @@ const state = {
         city: null,
         contacts_messenger: null,
         user: null
-    },
-    photos: []
+    }
 }
 
 const mutationsTypes = {
@@ -35,6 +36,10 @@ const mutationsTypes = {
     getUserprofileSuccess: '[profile] getUserprofileSuccess',
     getUserprofileFailure: '[profile] getUserprofileFailure',
 
+    clearSuccessMessageStart: '[profile] clearSuccessMessageStart',
+    clearSuccessMessageSuccess: '[profile] clearSuccessMessageSuccess',
+    clearSuccessMessageFailure: '[profile] clearSuccessMessageFailure',
+
     clearUserprofileStart: '[profile] clearUserprofileStart',
     clearUserprofileSuccess: '[profile] clearUserprofileSuccess',
     clearUserprofileFailure: '[profile] clearUserprofileFailure',
@@ -43,51 +48,59 @@ const mutationsTypes = {
     getUserProfilePhotosSuccess: '[profile] getUserProfilePhotosSuccess',
     getUserProfilePhotosFailure: '[profile] getUserProfilePhotosFailure',
 
+    addNewPhotosStart: '[profile] addNewPhotosStart',
+    addNewPhotosSuccess: '[profile] addNewPhotosSuccess',
+    addNewPhotosFailure: '[profile] addNewPhotosFailure',
+
+    delPhotosStart: '[profile] delPhotosStart',
+    delPhotosSuccess: '[profile] delPhotosSuccess',
+    delPhotosFailure: '[profile] delPhotosFailure',
+
 }
 
 const mutations = {
     [mutationsTypes.getDataStart](state) {
         state.form.id = null,
-        state.form.name = null,
-        state.form.surname = null,
-        state.form.gender = null,
-        state.form.sport_type = null,
-        state.form.characteristics = null,
-        state.form.athlete_photo = null,
-        state.form.user = null,
-        state.form.date_of_birth = null,
-        state.form.city = null,
-        state.form.contacts_messenger = null
+            state.form.name = null,
+            state.form.surname = null,
+            state.form.gender = null,
+            state.form.sport_type = null,
+            state.form.characteristics = null,
+            state.form.athlete_photo = null,
+            state.form.user = null,
+            state.form.date_of_birth = null,
+            state.form.city = null,
+            state.form.contacts_messenger = null
 
         state.isLoading = true,
-        state.validationsErrors = null,
-        state.successMessage = null
+            state.errorMessage = [],
+            state.successMessage = []
     },
     [mutationsTypes.getDataSuccess](state, payload) {
         state.form.id = payload.id,
-        state.form.name = payload.name,
-        state.form.surname = payload.surname,
-        state.form.gender = payload.gender,
-        state.form.sport_type = payload.sport_type,
-        state.form.characteristics = payload.characteristics,
-        state.form.athlete_photo = payload.athlete_photo,
-        state.form.user = payload.user,
-        state.form.date_of_birth = payload.date_of_birth,
-        state.form.city = payload.city,
-        state.form.contacts_messenger = payload.contacts_messenger
+            state.form.name = payload.name,
+            state.form.surname = payload.surname,
+            state.form.gender = payload.gender,
+            state.form.sport_type = payload.sport_type,
+            state.form.characteristics = payload.characteristics,
+            state.form.athlete_photo = payload.athlete_photo,
+            state.form.user = payload.user,
+            state.form.date_of_birth = payload.date_of_birth,
+            state.form.city = payload.city,
+            state.form.contacts_messenger = payload.contacts_messenger
 
         state.isLoading = false
     },
     [mutationsTypes.getDataFailure](state, payload) {
-        state.validationsErrors = payload,
-        state.isLoading = false
+        state.errorMessage = payload,
+            state.isLoading = false
     },
 
 
     [mutationsTypes.putDataStart](state) {
         state.isSubmitting = true
-        state.validationsErrors = null
-        state.successMessage = null
+        state.errorMessage = []
+        state.successMessage = []
     },
     [mutationsTypes.putDataSuccess](state, payload) {
         state.isSubmitting = false,
@@ -108,7 +121,7 @@ const mutations = {
             state.successMessage = ['Данные успешно обновлены!']
     },
     [mutationsTypes.putDataFailure](state, errors) {
-        state.validationsErrors = errors
+        state.errorMessage = errors
         state.isSubmitting = false
     },
 
@@ -120,10 +133,20 @@ const mutations = {
     [mutationsTypes.getUserprofileFailure]() {
     },
 
+    [mutationsTypes.clearSuccessMessageStart](state) {
+        state.successMessage = []
+        state.errorMessage = []
+    },
+    [mutationsTypes.clearSuccessMessageSuccess]() {
+    },
+    [mutationsTypes.clearSuccessMessageFailure]() {
+    },
+
     [mutationsTypes.clearUserprofileStart]() {
     },
     [mutationsTypes.clearUserprofileSuccess](state) {
-        state.validationsErrors = null,
+        state.errorMessage = [],
+            state.successMessage = [],
             state.form.id = null,
             state.form.name = null,
             state.form.surname = null,
@@ -148,6 +171,42 @@ const mutations = {
     },
     [mutationsTypes.getUserProfilePhotosFailure](state) {
         state.isLoading = false
+    },
+
+    [mutationsTypes.addNewPhotosStart](state) {
+        state.newPhotos = []
+        state.isSubmitting = true
+        state.successMessage = []
+        state.errorMessage = []
+    },
+    [mutationsTypes.addNewPhotosSuccess](state, payload) {
+        state.photos.unshift(...payload)
+        state.isSubmitting = false
+        state.successMessage = ['Фотографии успешно загружены']
+    },
+    [mutationsTypes.addNewPhotosFailure](state) {
+        state.isSubmitting = false
+        state.errorMessage = ['Ошибка при загрузке фотографий']
+    },
+
+    [mutationsTypes.delPhotosStart](state) {
+        state.isSubmitting = true
+        state.newPhotos = []
+        state.successMessage = []
+        state.errorMessage = []
+    },
+    [mutationsTypes.delPhotosSuccess](state, payload) {
+        state.photos = state.photos.filter(function (photo) {
+            return !payload.find(function (p) {
+                return p.id === photo.id
+            })
+        })
+        state.isSubmitting = false
+        state.successMessage = ['Фотографии удалены']
+    },
+    [mutationsTypes.delPhotosFailure](state) {
+        state.isSubmitting = false
+        state.errorMessage = ['Ошибка при удалении']
     }
 }
 
@@ -223,6 +282,10 @@ const actions = {
         }
     },
 
+    clearSuccessMessage(context) {
+        context.commit(mutationsTypes.clearSuccessMessageStart)
+    },
+
     clearUserProfile(context) {
         context.commit(mutationsTypes.clearUserprofileStart)
         context.commit(mutationsTypes.clearUserprofileSuccess)
@@ -240,6 +303,36 @@ const actions = {
                     context.commit(mutationsTypes.getUserProfilePhotosFailure)
                 })
         })
+    },
+
+    addPhotos(context, credentials) {
+        return new Promise((resolve) => {
+            context.commit(mutationsTypes.addNewPhotosStart)
+            profileApi.addPhoto(credentials)
+                .then(response => {
+                    console.log('response', response.data)
+                    context.commit(mutationsTypes.addNewPhotosSuccess, response.data)
+                    resolve(response.data)
+                })
+                .catch(() => {
+                    context.commit(mutationsTypes.addNewPhotosFailure)
+                })
+        })
+    },
+
+    delPhotos(context, credentials) {
+        console.log('credentials.data', credentials.data)
+        return new Promise(() => {
+            context.commit(mutationsTypes.delPhotosStart)
+            profileApi.delPhoto(credentials)
+                .then(response => {
+                    console.log('response', response.data)
+                    context.commit(mutationsTypes.delPhotosSuccess, response.data)
+                })
+                .catch(() => {
+                    context.commit(mutationsTypes.delPhotosFailure)
+                })
+        })
     }
 
 }
@@ -247,6 +340,9 @@ const actions = {
 const getters = {
     getUserProfile: state => {
         return state.form
+    },
+    getPhotos: state => {
+        return state.photos
     }
 }
 

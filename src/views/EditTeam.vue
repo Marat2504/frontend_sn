@@ -1,9 +1,11 @@
 <script>
 import {mapState} from "vuex";
 import domainConst from "@/helpers/const"
+import MvcModalMessage from "@/components/modal/ModalMessage.vue";
 
 export default {
     name: 'MvcEditTeam',
+    components: {MvcModalMessage},
     computed: {
         ...mapState({
             currentTeam: state => state.currentTeam.currentTeam,
@@ -49,6 +51,17 @@ export default {
 </script>
 
 <template>
+    <mvc-modal-message
+            :messages="isSubmittingMassage"
+            mood="red"
+            clear-message="clearIsSubmitMessage"
+    ></mvc-modal-message>
+    <mvc-modal-message
+            :messages="isSubmittingMassage"
+            mood="green"
+            clear-message="clearIsSubmitMessage"
+    ></mvc-modal-message>
+
     <div class="class-flex block-area">
         <h2>Редактировать данные</h2>
 
@@ -121,16 +134,6 @@ export default {
                 </form>
             </div>
 
-        </div>
-        <div v-if="validationsErrors">
-            <ul v-for="error in validationsErrors" :key="error">
-                <li>{{ error[0] }}</li>
-            </ul>
-        </div>
-        <div class="block-massege" v-if="isSubmittingMassage">
-            <ul v-for="message in isSubmittingMassage" :key="message">
-                <li>{{ message }}</li>
-            </ul>
         </div>
 
     </div>

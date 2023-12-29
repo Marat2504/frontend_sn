@@ -4,10 +4,11 @@ import domainConst from "@/helpers/const"
 import MvcCaptainBlock from "@/components/CaptainBlock.vue";
 import MvcAthleteBlock from "@/components/AthleteBlock.vue";
 import MvcCurrentTeamInfo from "@/components/CurrentTeamInfo.vue";
+import MvcSpinner from "@/components/Spiner.vue";
 
 export default {
     name: 'MvcCurrentTeam',
-    components: {MvcCurrentTeamInfo, MvcAthleteBlock, MvcCaptainBlock,},
+    components: {MvcSpinner, MvcCurrentTeamInfo, MvcAthleteBlock, MvcCaptainBlock,},
     data() {
         return {
             domain: domainConst.domain,
@@ -68,7 +69,7 @@ export default {
                     :domain="domain"
                     :captain="teamCaptain"
             ></MvcCaptainBlock>
-            <div v-else class="loader"></div>
+            <mvc-spinner v-else></mvc-spinner>
         </div>
         <div class="block-area" v-if="teamAthletes.length !== 0">
             <MvcAthleteBlock
@@ -76,7 +77,7 @@ export default {
                     :domain="domain"
                     :athletes="teamAthletes"
             ></MvcAthleteBlock>
-            <div v-else class="loader"></div>
+            <mvc-spinner v-else></mvc-spinner>
         </div>
     </div>
 
