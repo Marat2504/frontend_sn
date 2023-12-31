@@ -6,12 +6,14 @@ export default {
     name: 'MvcSideBar',
     data() {
         return {
-            domain: domainConst.domain
+            domain: domainConst.domain,
+            userId: null
         }
     },
     computed: {
         ...mapState({
-            userProfile: state => state.profile.form
+            userProfile: state => state.profile.form,
+            isLoggedIn: state => state.auth.isLoggedIn
         })
     },
     methods: {
@@ -21,18 +23,34 @@ export default {
         //     console.log('userProfile.id', userProfile.id)
         //     return userProfile.id
         // }
+    },
+    created() {
+        const id = localStorage.getItem('user.profile')
+        if (id && id !== '') {
+            this.userId = id
+        }
     }
 
 }
 </script>
 
 <template>
-    <div class="sidebar_block">
+    <div class="sidebar_block" v-if="isLoggedIn">
         <ul class="sidebar-menu">
 
-            <router-link class="sidebar-link"
-                         :to="{name: 'userProfile', params: {userProfileId: 'f7e758af-e58d-42b6-bf7e-2eb86bdaa470'}}">
-                <li class="sidebar-item"><i class="fa fa-user-circle-o" aria-hidden="true">&nbsp;&nbsp;</i>Мой профиль</li>
+<!--            <router-link-->
+<!--                    v-if="userId === null"-->
+<!--                    class="sidebar-link"-->
+<!--                    :to="{name: 'userProfile', params: {userProfileId: userProfile.id}}">-->
+<!--                <li class="sidebar-item"><i class="fa fa-user-circle-o" aria-hidden="true">&nbsp;&nbsp;</i>Мой профиль-->
+<!--                </li>-->
+<!--            </router-link>-->
+            <router-link
+                    v-if="userId"
+                    class="sidebar-link"
+                    :to="{name: 'userProfile', params: {userProfileId: userId}}">
+                <li class="sidebar-item"><i class="fa fa-user-circle-o" aria-hidden="true">&nbsp;&nbsp;</i>Мой профиль
+                </li>
             </router-link>
 
 

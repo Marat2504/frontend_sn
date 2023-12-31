@@ -3,10 +3,11 @@ import {mapState} from "vuex";
 import domainConst from "@/helpers/const.js"
 import MvcPhotoPreview from "@/components/PhotoPreview.vue";
 import MvcSpinner from "@/components/Spiner.vue";
+import MvcTrackBlock from "@/components/TrackBlock.vue"
 
 export default {
     name: 'MvcUserProfile',
-    components: {MvcSpinner, MvcPhotoPreview},
+    components: {MvcSpinner, MvcPhotoPreview, MvcTrackBlock},
     computed: {
         ...mapState({
             userProfile: state => state.profile.form,
@@ -15,7 +16,8 @@ export default {
             photos: state => state.profile.photos,
             subscribers: state => state.subscription.subscribers,
             subscriptions: state => state.subscription.subscriptions,
-            isTargetUser: state => state.subscription.isTargetUser
+            isTargetUser: state => state.subscription.isTargetUser,
+            tracks: state => state.workout.tracks,
         })
     },
     data() {
@@ -38,6 +40,7 @@ export default {
             this.$store.dispatch('getSubscriptionsWithProfileId', uuidProfile)
             this.$store.dispatch('isTargetUserWithProfileId', uuidProfile)
         }
+        this.$store.dispatch('getAllTracks', uuidProfile)
 
     },
     methods: {
@@ -137,6 +140,13 @@ export default {
                 :domain="domain"
                 :photos="photos">
         </mvc-photo-preview>
+
+        <mvc-track-block
+        :profile-id="uuidRoute"
+        :tracks="tracks"
+        :domain="domain"
+        >
+        </mvc-track-block>
     </div>
 
 </template>
