@@ -12,6 +12,7 @@ import UserProfile from "@/views/UserProfile.vue";
 import MyPhotos from "@/views/MyPhotos.vue";
 import EditTeam from "@/views/EditTeam.vue";
 import UserPagePhotos from "@/views/UserPagePhotos.vue";
+import MyFriends from "@/views/MyFriends.vue";
 
 
 const routes = [
@@ -78,6 +79,11 @@ const routes = [
         path: '/team/:slugTeam/edit',
         name: 'editTeam',
         component: EditTeam
+    },
+        {
+        path: '/friends',
+        name: 'myFriends',
+        component: MyFriends
     },
 ]
 

@@ -25,7 +25,9 @@ export default {
         return {
             selectedFiles: null,
             showModal: false,
-            track: null
+            track: null,
+            idFromLocalStorage: localStorage.getItem('user.profile')
+
         }
     },
     computed: {
@@ -85,7 +87,7 @@ export default {
     <div class="block-area-profile">
         <div class="block-title">
             <div class="title_block-title"><h3>Треки</h3></div>
-            <div class="title_block-button">
+            <div class="title_block-button" v-if="idFromLocalStorage === profileId">
                 <div v-if="selectedFiles">
                     <button
                             style="margin-right: 10px"
@@ -136,7 +138,9 @@ export default {
             >
                 <div class="tracks-time">
                     <h4>{{ editData(track.created_at) }}</h4>
-                    <h2 @click="editTrack(track)">...</h2>
+                    <h2 @click="editTrack(track)"
+                        v-if="idFromLocalStorage === profileId"
+                    >...</h2>
                 </div>
                 <div class="tracks-value">
                     <div class="tracks-distance">

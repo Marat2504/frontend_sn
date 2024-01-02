@@ -4,10 +4,11 @@ import domainConst from "@/helpers/const.js"
 import MvcPhotoPreview from "@/components/PhotoPreview.vue";
 import MvcSpinner from "@/components/Spiner.vue";
 import MvcTrackBlock from "@/components/TrackBlock.vue"
+import MvcSubList from "@/components/subList.vue";
 
 export default {
     name: 'MvcUserProfile',
-    components: {MvcSpinner, MvcPhotoPreview, MvcTrackBlock},
+    components: {MvcSubList, MvcSpinner, MvcPhotoPreview, MvcTrackBlock},
     computed: {
         ...mapState({
             userProfile: state => state.profile.form,
@@ -25,7 +26,9 @@ export default {
             isUserProfile: null,
             domain: domainConst.domain,
             uuidRoute: this.$route.params.userProfileId,
-            userProfileUuid: this.$store.getters['getUserProfileId']
+            userProfileUuid: this.$store.getters['getUserProfileId'],
+            showModalSubscriptions: false,
+            showModalSubscribers: false
         }
     },
     beforeCreate() {
@@ -49,6 +52,12 @@ export default {
         },
         UnSubscribe() {
             this.$store.dispatch('isUnSub', this.uuidRoute)
+        },
+        openModalSubscribers() {
+            this.showModalSubscribers = true
+        },
+        openModalSubscriptions () {
+            this.showModalSubscriptions = true
         }
     },
     watch: {
@@ -57,8 +66,8 @@ export default {
             this.uuidRoute = newRoute.params.userProfileId
             this.$store.dispatch('getDataOtherUser', this.uuidRoute)
             this.$store.dispatch('getUserProfilePhotos', this.uuidRoute)
-            this.$store.dispatch('getSubscribers')
-            this.$store.dispatch('getSubscriptions')
+            this.$store.dispatch('getSubscribersWithProfileId', this.uuidRoute)
+            this.$store.dispatch('getSubscriptionsWithProfileId', this.uuidRoute)
         }
     }
 }
@@ -80,8 +89,12 @@ export default {
                     </router-link>
                 </div>
                 <div class="userProfileBlock-sub">
-                    <h4>Подписчиков &nbsp; {{ subscribers.length }}</h4>
-                    <h4>Подписок &nbsp; {{ subscriptions.length }}</h4>
+                    <h3
+                            @click="openModalSubscribers"
+                    >Подписчиков &nbsp; {{ subscribers.length }}</h3>
+                    <h3
+                        @click="openModalSubscriptions"
+                    >Подписок &nbsp; {{ subscriptions.length }}</h3>
                 </div>
                 <div v-if="uuidRoute !== userProfileUuid">
                     <button v-if="!isTargetUser"
@@ -142,14 +155,81 @@ export default {
         </mvc-photo-preview>
 
         <mvc-track-block
-        :profile-id="uuidRoute"
-        :tracks="tracks"
-        :domain="domain"
+                :profile-id="uuidRoute"
+                :tracks="tracks"
+                :domain="domain"
         >
         </mvc-track-block>
     </div>
 
+
+    <div v-if="showModalSubscriptions" class="modal" @click="showModalSubscriptions = false">
+        <div class="modal-content">
+            <span class="close" @click="showModalSubscriptions = false">&times;</span>
+
+            <div class="modal-athletes-block">
+                <mvc-sub-list
+                        :domain="domain"
+                        :athletes="subscriptions"
+                        :is-loading="isLoading"
+                        sub="subscriptions"
+                >
+                    Подписки
+                </mvc-sub-list>
+            </div>
+        </div>
+    </div>
+
+    <div v-if="showModalSubscribers" class="modal" @click="showModalSubscribers = false">
+        <div class="modal-content">
+            <span class="close" @click="showModalSubscribers = false">&times;</span>
+            <mvc-sub-list
+                    :domain="domain"
+                    :athletes="subscribers"
+                    :is-loading="isLoading"
+                    sub="subscribers"
+            >
+                Подписчики
+            </mvc-sub-list>
+
+        </div>
+    </div>
+
+
 </template>
 
 <style scoped>
+.modal {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
 </style>

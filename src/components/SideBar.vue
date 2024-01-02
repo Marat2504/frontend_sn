@@ -38,13 +38,13 @@ export default {
     <div class="sidebar_block" v-if="isLoggedIn">
         <ul class="sidebar-menu">
 
-<!--            <router-link-->
-<!--                    v-if="userId === null"-->
-<!--                    class="sidebar-link"-->
-<!--                    :to="{name: 'userProfile', params: {userProfileId: userProfile.id}}">-->
-<!--                <li class="sidebar-item"><i class="fa fa-user-circle-o" aria-hidden="true">&nbsp;&nbsp;</i>Мой профиль-->
-<!--                </li>-->
-<!--            </router-link>-->
+            <!--            <router-link-->
+            <!--                    v-if="userId === null"-->
+            <!--                    class="sidebar-link"-->
+            <!--                    :to="{name: 'userProfile', params: {userProfileId: userProfile.id}}">-->
+            <!--                <li class="sidebar-item"><i class="fa fa-user-circle-o" aria-hidden="true">&nbsp;&nbsp;</i>Мой профиль-->
+            <!--                </li>-->
+            <!--            </router-link>-->
             <router-link
                     v-if="userId"
                     class="sidebar-link"
@@ -61,6 +61,10 @@ export default {
 
             <router-link class="sidebar-link" :to="{name: 'myPhotos'}">
                 <li class="sidebar-item"><i class="fa fa-picture-o" aria-hidden="true">&nbsp;&nbsp;</i>Фотографии</li>
+            </router-link>
+
+            <router-link class="sidebar-link" :to="{name: 'myFriends'}">
+                <li class="sidebar-item"><i class="fa fa-user" aria-hidden="true">&nbsp;&nbsp;</i>Друзья</li>
             </router-link>
 
         </ul>
